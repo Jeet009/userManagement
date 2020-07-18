@@ -1,13 +1,14 @@
 //Component To ADD DATA With Stepper Form
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import PersonalInfoComponent from "./PersonalInfoComponent";
 import CompanyInfoComponent from "./CompanyInfoComponent";
 import ConfirmFormComponent from "./ConfirmFormComponent";
 import SuccessComponent from "./SuccessComponent";
+import { increment, decrement, addData } from "../actions/actions";
 
-export default class AddFormComponent extends Component {
+class AddFormComponent extends Component {
   state = {
-    step: 1,
     id: "",
     name: "",
     username: "",
@@ -16,21 +17,22 @@ export default class AddFormComponent extends Component {
     city: "",
     website: "",
   };
-
   // forward
   nextStep = () => {
-    const { step } = this.state;
-    this.setState({
-      step: step + 1,
-    });
+    this.props.incrementValue();
+    // const { step } = this.state;
+    // this.setState({
+    //   step: step + 1,
+    // });
   };
 
   // backward
   prevStep = () => {
-    const { step } = this.state;
-    this.setState({
-      step: step - 1,
-    });
+    this.props.decrementValue();
+    // const { step } = this.state;
+    // this.setState({
+    //   step: step - 1,
+    // });
   };
 
   // Handle Input
@@ -39,18 +41,9 @@ export default class AddFormComponent extends Component {
   };
 
   render() {
-    const {
-      step,
-      id,
-      name,
-      username,
-      email,
-      phone,
-      city,
-      website,
-    } = this.state;
+    const { id, name, username, email, phone, city, website } = this.state;
     const values = { id, name, username, email, phone, city, website };
-    switch (step) {
+    switch (this.props.count) {
       case 1:
         return (
           <PersonalInfoComponent
@@ -83,3 +76,22 @@ export default class AddFormComponent extends Component {
     }
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    count: state,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    incrementValue: () => {
+      dispatch(increment());
+    },
+    decrementValue: () => {
+      dispatch(decrement());
+    },
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddFormComponent);
