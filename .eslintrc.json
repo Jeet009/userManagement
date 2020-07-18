@@ -1,0 +1,16 @@
+{
+  "extends": "airbnb",
+  "plugins": ["react"],
+  "rules": {
+    "prefer-destructuring": "warn",
+    "quotes": "off",
+    "linebreak-style": "off",
+    "object-curly-newline": "off",
+    "jsx-quotes": "off",
+    "no-unused-vars": "warn",
+    "no-duplicate-imports": "off",
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0,
+    "react/jsx-filename-extension": 0
+  }
+}
